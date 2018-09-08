@@ -10,18 +10,9 @@
  * 2. если символ повторяется более 1 раза, к нему добавляется количество повторений
  */
 
-function getNumberOfOccurrenceString(numberOfOccurrence) {
-  if (numberOfOccurrence > 1) {
-    return `${numberOfOccurrence}`
-  }
-
-  return ''
-}
-
 function getNewResultString(resultString, previousLetter, numberOfOccurrence) {
-  const numberString = getNumberOfOccurrenceString(numberOfOccurrence)
+  const numberString = numberOfOccurrence === 1 ? '' : numberOfOccurrence
   return `${resultString}${previousLetter}${numberString}`
-
 }
 
 export default function rle(inputString) {
@@ -30,31 +21,35 @@ export default function rle(inputString) {
     throw new Error('Input string is not valid')
   }
 
+  if (inputString.length === 1) {
+    return inputString
+  }
+
   let resultString = ''
-  let previousLetter = inputString[0]
-  let numberOfOccurrence = 0;
+  let numberOfOccurrence = 1;
 
   const inputStringArray = [...inputString]
-  inputStringArray.map((letter, index, array) => {
-    const sameLetter = previousLetter === letter
+  for (let index = 1; index < inputString.length; index++) {
+    const currentLetter = inputStringArray[index]
+    const previousLetter = inputStringArray[index - 1]
+    const sameLetter = previousLetter === currentLetter
     if (sameLetter) {
       numberOfOccurrence++
     }
 
-    const letterChanged = previousLetter !== letter
+    const letterChanged = previousLetter !== currentLetter
     if (letterChanged) {
       resultString = getNewResultString(
         resultString, previousLetter, numberOfOccurrence)
       numberOfOccurrence = 1
-      previousLetter = letter
     }
 
-    const lastLetter = index === array.length - 1
+    const lastLetter = index === inputStringArray.length - 1
     if (lastLetter) {
       resultString = getNewResultString(
-        resultString, previousLetter, numberOfOccurrence)
+        resultString, currentLetter, numberOfOccurrence)
     }
-  })
+  }
 
   return resultString
 }
