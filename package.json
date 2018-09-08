@@ -1,0 +1,19 @@
+{
+  "name": "run-length-encoding",
+  "version": "1.0.0",
+  "description": "Run-length encoding (RLE) is a very simple form of lossless data compression.",
+  "main": "rle.js",
+  "author": "mendrew",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest",
+    "test-watch": "jest --watchAll"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-jest": "^23.4.2",
+    "babel-preset-env": "^1.7.0",
+    "jest": "^23.5.0",
+    "regenerator-runtime": "^0.12.1"
+  }
+}
